@@ -29,30 +29,36 @@ module CONVERT_CHARA
 
 end
 
-def total_scores
+class NameCalculator
+  def initialize(namelist)
+    @namelist = File.read(namelist).scan(/\w+/).sort
+  end
 
-  namelist = File.read("names.txt").scan(/\w+/).sort
-  include CONVERT_CHARA
+def perform
+
+  extend CONVERT_CHARA
   alph_hash
-  @n = 0
+  @alpha_value = 0
   @total_score = {}
 
-  namelist.each do |name|
-    @n += 1
+  @namelist.each do |name|
+    @alpha_value += 1
     convert_name(name)
-    @total_score[name] = @n * @num_sum
+    @total_score[name] = @alpha_value * @num_sum
   end
 
   @overall_total = 0
   @total_score.each do |name, score|
       @overall_total += score
     end
-  print @total_score
-  puts "\n"
-  puts @overall_total
+  #puts "The total score for each name is:"
+  #print @total_score
+  #puts "\n"
+  puts "Overall Total for the name list is: #{@overall_total.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse}"
 
 end
+end
 
-total_scores
+#NameCalculator.new("names.txt")
 
 binding.pry
