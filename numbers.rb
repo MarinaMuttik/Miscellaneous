@@ -1,13 +1,14 @@
+require 'csv'
+
 puts "Welcome to the addition game! How many rounds would you like to play?"
 turns = 0
 totalturns = gets.chomp.to_i
-
 correct = 0
 wrong = 0
+start = Time.now
 
 while turns < totalturns
-turns = turns + 1
-  start = Time.now
+  turns += 1
   x = Random.rand(1..10)
   y = Random.rand(1..10)
   puts "#{x} + #{y} = "
@@ -16,16 +17,18 @@ turns = turns + 1
   answer = gets.chomp.to_i
 
   if x + y == answer
-  puts "Correct"
-  correct += 1
+    puts "Correct"
+    puts "\n"
+    correct += 1
   else
-  puts "False :-("
-  wrong += 1
+    puts "False :-("
+    puts "\n"
+    wrong += 1
   end
 
 end
 
-duration = Time.now - start
+duration = (Time.now - start).round(2)
 
 puts "\n"
 puts "Correct: #{correct}; Wrong: #{wrong}, Total Rounds: #{totalturns}"
@@ -37,7 +40,9 @@ puts "\n"
 puts "Name?"
 player = gets.chomp
 
-filename = "scores.txt"
-file = File.open(filename, "a+")
-file.write "#{player}: #{score}%, #{duration} seconds, #{totalturns} turns"
+filename = "numbergamedata.csv"
+file = CSV.open(filename, "a+") do |csv|
+  #csv << ["Player", "Score (%)", "Duration (seconds)", "Total Turns"] #used to setup csv file columns
+    csv << [player, score, duration, totalturns]
+  end
 file.close
