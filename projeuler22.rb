@@ -12,36 +12,45 @@ class NameCalculator
   end
 
   def convert_name(name) #convert name to upcase chars array, map using alphabet hash to convert chars to numerical score, return the summed value of the char values
-    alphabet_num_hash = ( ( "A".."Z" ).to_a.zip( ( 1..26 ).to_a) ).to_h
+    alphabet_num_hash
     name_alph_value = name.upcase.chars.map.sum do |char|
-      alphabet_num_hash[char]
+      @alphabet_num_hash[char]
     end
   end
 
   def name_scores #cycle through namelist, mapping to a hash the name to the key and the value as the index multiplied by the name chars score from convert_name
-    @name_scores_arr = {}
+    name_scores_arr = {}
     @namelist.each.with_index(1) do |name, index|
-      @name_scores_arr[name] = index * convert_name(name)
+      name_scores_arr[name] = index * convert_name(name)
     end
-    @name_scores_arr
+    name_scores_arr
   end
 
   def namelist_total # sum the scores of every name in the namelist to produce an overall namelist total
-    name_scores
-    @namelist_total = @name_scores_arr.values.sum
+    @namelist_total = name_scores.values.sum
+  end
+
+  def alphabet_num_hash
+    @alphabet_num_hash ||= ( ( "A".."Z" ).to_a.zip( ( 1..26 ).to_a) ).to_h
   end
 
   def add_commas_to_num(num)
-    num = num.to_s.chars.to_a #convert num to array of string characters
-    num = num.reverse.each_slice(3) #reverse characters and slice after each 3rd number character
-    num = num.map(&:join).join(",").reverse #rejoin numbers with a comma in each gap and reverse back to normal
+    num
+      .to_s
+      .chars
+      .to_a #convert num to array of string characters
+      .reverse
+      .each_slice(3) #reverse characters and slice after each 3rd number character
+      .map(&:join)
+      .join(",")
+      .reverse #rejoin numbers with a comma in each gap and reverse back to normal
   end
 
   def perform # run through the methods to output the overall namelist total as a string with comma formatting for the number
     start_time = Time.now
     namelist_total
     puts "Overall Total for the name list is: #{add_commas_to_num( @namelist_total )}"
-    puts "Time taken: #{( Time.now - start_time ) * 1000} miliseconds"
+    puts "Time taken: #{( ( Time.now - start_time ) * 1000 ).round(2)} miliseconds"
   end
 
 end
