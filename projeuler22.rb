@@ -8,7 +8,7 @@ require "pry"
 class NameCalculator
   attr_reader :namelist
   def initialize(namelist)
-    @namelist ||= File.read(namelist).scan(/\w+/).sort
+    @namelist = File.read(namelist).scan(/\w+/).sort
   end
 
   def convert_name(name) #convert name to upcase chars array, map using alphabet hash to convert chars to numerical score, return the summed value of the char values
