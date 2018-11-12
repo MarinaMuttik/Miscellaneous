@@ -4,18 +4,20 @@
 
 =begin
 class Array
+  method_error = -> { 'Error: does not respond to given method' }
+  method_block_error = -> { 'Error: both method and block provided!' }
   def each_count(method = nil, *args)
     if method.nil? && block_given? == false
       each_with_object(Hash.new(0)) { |key, value| value[key] += 1 }
     elsif method && block_given? == false
       map do |element|
-        return 'Error: does not respond to given method' if element.respond_to?(method) == false
+        method_error.call unless element.respond_to?(method)
         element.send(method, *args)
       end.each_count
     elsif method.nil? && block_given?
       map { |element| yield element } .each_count
     elsif method && block_given?
-      'Error: both method and block provided!'
+      method_block_error.call
     end
   end
 end
@@ -31,17 +33,17 @@ class Array
   end
 
   def send_method(method, *args)
-    def method_error; 'Error: does not respond to given method'; end
+    method_error = -> { 'Error: does not respond to given method' }
     map do |element|
-    return method_error unless element.respond_to?(method)
-    element.send(method, *args)
+      return method_error.call unless element.respond_to?(method)
+      element.send(method, *args)
     end
     .count_hash
   end
 
   def each_count(method = nil, *args)
-    def method_block_error; 'Error: both method and block provided!'; end
-    return method_block_error if method.nil? == false && block_given?
+    method_block_error = -> { 'Error: both method and block provided!' }
+    return method_block_error.call if method.nil? == false && block_given?
     return count_hash if method.nil? && block_given? == false
     return send_method(method, *args) if (method.nil? && block_given?) == false
     return handle_block(&Proc.new) if method.nil? && block_given?
@@ -51,6 +53,8 @@ end
 =begin
 class Array
   def each_count(method = nil, *args)
+    method_block_error = -> { 'Error: both method and block provided!' }
+    method_error = -> { 'Error: does not respond to given method' }
     case method.nil?
     when true
       case block_given?
@@ -62,10 +66,10 @@ class Array
     when false
       case block_given?
       when true
-        'Error: both method and block provided!'
+        'method_block_error.call
       when false
         map do |element|
-          return 'Error: does not respond to given method' unless element.respond_to?(method)
+          method_error.call unless element.respond_to?(method)
           element.send(method, *args)
         end.each_count
       end
