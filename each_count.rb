@@ -33,9 +33,9 @@ end
 =begin
 # version using if/elsif
 class Array
-  method_error = -> { 'Error: does not respond to given method' }
-  method_block_error = -> { 'Error: both method and block provided!' }
   def each_count(method = nil, *args)
+    method_error = -> { 'Error: does not respond to given method' }
+    method_block_error = -> { 'Error: both method and block provided!' }
     if method && block_given?
       method_block_error.call
     elsif block_given?
@@ -47,13 +47,12 @@ class Array
         method_error.call unless element.respond_to?(method)
         element.send(method, *args)
       end.each_count
-
     end
   end
 end
 
-class Array
 # version using case
+class Array
   def each_count(method = nil, *args)
     method_block_error = -> { 'Error: both method and block provided!' }
     method_error = -> { 'Error: does not respond to given method' }
