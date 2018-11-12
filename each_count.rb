@@ -18,7 +18,7 @@ class Array
       return method_error.call unless element.respond_to?(method)
       element.send(method, *args)
     end
-    .count_hash
+      .count_hash
   end
 
   def each_count(method = nil, *args)
@@ -97,5 +97,5 @@ p cities.each_count { |city| (city.length % 3).zero? }
 p cities.each_count(:values)
 # => Error: does not respond to given method
 
-p cities.each_count(:length) {|city| city.length % 3 == 0}
+p cities.each_count(:length) { |city| (city.length % 3).zero? }
 # => Error: both method and block provided!
