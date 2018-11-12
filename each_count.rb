@@ -7,17 +7,18 @@ class Array
   method_error = -> { 'Error: does not respond to given method' }
   method_block_error = -> { 'Error: both method and block provided!' }
   def each_count(method = nil, *args)
-    if method.nil? && block_given? == false
+    if method && block_given?
+      method_block_error.call
+    elsif block_given?
+      map { |element| yield element } .each_count
+    elsif method.nil?
       each_with_object(Hash.new(0)) { |key, value| value[key] += 1 }
-    elsif method && block_given? == false
+    elsif method
       map do |element|
         method_error.call unless element.respond_to?(method)
         element.send(method, *args)
       end.each_count
-    elsif method.nil? && block_given?
-      map { |element| yield element } .each_count
-    elsif method && block_given?
-      method_block_error.call
+
     end
   end
 end
@@ -43,10 +44,10 @@ class Array
 
   def each_count(method = nil, *args)
     method_block_error = -> { 'Error: both method and block provided!' }
-    return method_block_error.call if method.nil? == false && block_given?
-    return count_hash if method.nil? && block_given? == false
-    return send_method(method, *args) if (method.nil? && block_given?) == false
-    return handle_block(&Proc.new) if method.nil? && block_given?
+    return method_block_error.call if method && block_given?
+    return handle_block(&Proc.new) if block_given?
+    return count_hash if method.nil?
+    return send_method(method, *args) if method
   end
 end
 
