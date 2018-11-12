@@ -1,4 +1,5 @@
-# method to return a count of discrete elements contained in the form of {element => count}
+# Under Class Array create a method to return a count of discrete elements
+# contained in the form of {element => count}
 # solution to CodeWars Kata Array#each_count
 # frozen_string_literal: true
 
