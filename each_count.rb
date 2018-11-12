@@ -2,28 +2,7 @@
 # solution to CodeWars Kata Array#each_count
 # frozen_string_literal: true
 
-=begin
-class Array
-  method_error = -> { 'Error: does not respond to given method' }
-  method_block_error = -> { 'Error: both method and block provided!' }
-  def each_count(method = nil, *args)
-    if method && block_given?
-      method_block_error.call
-    elsif block_given?
-      map { |element| yield element } .each_count
-    elsif method.nil?
-      each_with_object(Hash.new(0)) { |key, value| value[key] += 1 }
-    elsif method
-      map do |element|
-        method_error.call unless element.respond_to?(method)
-        element.send(method, *args)
-      end.each_count
-
-    end
-  end
-end
-=end
-
+# version using methods
 class Array
   def count_hash
     each_with_object(Hash.new(0)) { |key, value| value[key] += 1 }
@@ -52,7 +31,29 @@ class Array
 end
 
 =begin
+# version using if/elsif
 class Array
+  method_error = -> { 'Error: does not respond to given method' }
+  method_block_error = -> { 'Error: both method and block provided!' }
+  def each_count(method = nil, *args)
+    if method && block_given?
+      method_block_error.call
+    elsif block_given?
+      map { |element| yield element } .each_count
+    elsif method.nil?
+      each_with_object(Hash.new(0)) { |key, value| value[key] += 1 }
+    elsif method
+      map do |element|
+        method_error.call unless element.respond_to?(method)
+        element.send(method, *args)
+      end.each_count
+
+    end
+  end
+end
+
+class Array
+# version using case
   def each_count(method = nil, *args)
     method_block_error = -> { 'Error: both method and block provided!' }
     method_error = -> { 'Error: does not respond to given method' }
