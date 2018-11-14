@@ -59,5 +59,4 @@ class NameCalculator
 end
 
 #NameCalculator.new("names.txt")
-
 binding.pry
