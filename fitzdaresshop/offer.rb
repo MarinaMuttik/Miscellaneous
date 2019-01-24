@@ -1,4 +1,5 @@
 module Offers
+  # Applies a BOGOF discount
   module Bogof
     def apply_bogof(product)
       prod_count = @basket.count(product)
@@ -13,6 +14,9 @@ module Offers
     end
   end
 
+  # Applies a bulk discount.
+  # Can be modified by changing discount price and minimum purchase if this
+  # changes.
   module Bulk
     def apply_bulk(product)
       discount = 0.5
@@ -27,6 +31,7 @@ module Offers
     end
   end
 
+  # Can modify product in parameters if offers change to other products.
   def apply_offers
     extend Bogof
     apply_bogof($gr1)
