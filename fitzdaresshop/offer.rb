@@ -9,7 +9,7 @@ module Offers
         total_discount = free_items * product.price
         p "Total saving - £#{total_discount}"
         @basket_total -= total_discount
-        p "Current total: £#{@basket_total}"
+        p "Final total: £#{@basket_total}"
       end
     end
   end
@@ -26,7 +26,7 @@ module Offers
         p "Offer applied - £#{discount} on #{prod_count} #{product.name}"
         p "Total saving - £#{total_discount}"
         @basket_total -= total_discount
-        p "Current total: £#{@basket_total}"
+        p "Final total: £#{@basket_total}"
       end
     end
   end
