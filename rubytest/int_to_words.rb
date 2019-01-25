@@ -1,4 +1,5 @@
 $num_to_name = {
+  0 => '',
   1 => 'one',
   2 => 'two',
   3 => 'three',
@@ -25,7 +26,9 @@ $num_to_name = {
   60 => 'sixty',
   70 => 'seventy',
   80 => 'eighty',
-  90 => 'ninety'
+  90 => 'ninety',
+  100 => 'one hundred',
+  1000 => 'one thousand'
 }
 
 # Method to convert integer input to words
@@ -35,10 +38,12 @@ class Integer
       $num_to_name[self]
     else
       num = self.to_s.chars
-      num[-1] = $num_to_name[num[-1].to_i]
-      num[-2] = $num_to_name[(num[-2] + '0').to_i]
+      num[-1] = $num_to_name[num[-1].to_i] if num[-1]
+      num[-2] = $num_to_name[(num[-2] + '0').to_i] if num[-2]
+      num[-3] = $num_to_name[num[-3].to_i] + ' hundred' if num[-3]
+      num[-4] = $num_to_name[num[-4].to_i] + ' thousand' if num[-4]
 
-      num.join(' ')
+      num.join(' ').strip
     end
   end
 end
