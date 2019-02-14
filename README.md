@@ -33,6 +33,13 @@ A small program containing an addition numbers game, allowing custom rounds, and
 
 NB: Requires gem 'csv' to record to the file.
 
+
+### Fitzdare's Shop
+
+A challenge to create a convenience store ruby application, containing items, codes, and prices along with a checkout system to calculate totals and apply discounts.
+
+The full specification is contained in the folder.
+
 ### contacts and pstoretest
 
 Small programs designed to test pstore functionality. Contacts will display a menu when run and allow contacts to be added, listed, birthdays retrieved, and to exit. pstoretest simply tests the functionality and displays the info put into the file.
