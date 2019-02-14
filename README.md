@@ -40,6 +40,14 @@ A challenge to create a convenience store ruby application, containing items, co
 
 The full specification is contained in the folder.
 
+### lrug codegolf (WIP)
+
+Small set of challenges from LRUG's January event.
+
+### Ruby test (WIP)
+
+A small challenge to convert integers to their word value.
+
 ### contacts and pstoretest
 
 Small programs designed to test pstore functionality. Contacts will display a menu when run and allow contacts to be added, listed, birthdays retrieved, and to exit. pstoretest simply tests the functionality and displays the info put into the file.
