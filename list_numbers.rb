@@ -1,7 +1,18 @@
 # Body
 
 def solution(list)
-  'fail'
+  count = 0
+
+  list.slice_after do |n|
+    count += 1
+    n.next != list[count]
+  end.map do |ary|
+    if ary.length > 2
+      "#{ary.first}-#{ary.last}"
+    else
+      ary.join(',')
+    end
+  end.join(',')
 end
 
 # Testing
