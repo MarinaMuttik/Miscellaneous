@@ -6,7 +6,7 @@
 def solution(list)
   count = 0
 
-  list.slice_after do |n|
+  list.sort!.slice_after do |n|
     count += 1
     n.next != list[count]
   end.map do |ary|
