@@ -4,12 +4,8 @@
 # Body
 
 def solution(list)
-  count = 0
-
-  list.sort!.slice_after do |n|
-    count += 1
-    n.next != list[count]
-  end.map do |ary|
+  split_list = list.sort!.chunk_while { |n, m| n.next == m }
+  split_list.map do |ary|
     if ary.length > 2
       "#{ary.first}-#{ary.last}"
     else
