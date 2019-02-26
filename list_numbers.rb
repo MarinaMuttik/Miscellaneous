@@ -1,4 +1,4 @@
-# Program to format a consecutive list of numbers given in array form into a
+# Program to format a list of numbers given in array form into a
 # string, condensed where there are 3 or more consecutive numbers with a dash
 
 # Body
